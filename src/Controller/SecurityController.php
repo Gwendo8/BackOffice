@@ -13,8 +13,12 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
-
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        // Si une erreur d'authentification est présente, afficher un message flash
+        if ($error) {
+            $this->addFlash('error', 'Email ou mot de passe incorrect');
+        }
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
