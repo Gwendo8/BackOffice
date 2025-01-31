@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add a new user{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="h3 mb-3">Add a new user</h1>
+
+        {{ form_start(form) }}
+            <div class="mb-3">
+                {{ form_label(form.firstName) }}
+                {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.lastName) }}
+                {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.roles) }}
+                {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <button class="btn btn-primary" type="submit">Add User</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

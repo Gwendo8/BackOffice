@@ -1,0 +1,50 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0">Modifier l'utilisateur</h2>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                    
+                    <div class="mb-3">
+                        {{ form_label(form.firstName, 'Prénom', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.firstName) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.lastName, 'Nom', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.lastName) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.email, 'Email', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.password, 'Mot de passe', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.password) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.roles, 'Rôles', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.roles) }}
+                    </div>
+
+                    <button class="btn btn-success w-100 mt-4">Modifier</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
