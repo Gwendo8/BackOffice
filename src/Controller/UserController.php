@@ -15,17 +15,19 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
+    #[Route('/', name: 'app_user')]
+    #[IsGranted(attribute: 'ROLE_ADMIN')] 
+
     public function index(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAllUser();
         return $this->render('user/index.html.twig', [
-            'users' => $users, // assure-toi que 'users' est utilisé ici
+            'users' => $users, 
         ]);
     }
 
     #[Route('/user/add', name: 'app_user_add')]
-    #[IsGranted('ROLE_ADMIN')] // Cette ligne permet d'assurer que seul un admin peut ajouter un utilisateur
+    #[IsGranted(attribute: 'ROLE_ADMIN')] 
     public function new(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -61,7 +63,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/edit/{id}', name: 'app_user_edit')]
-    #[IsGranted('ROLE_ADMIN')] // Cette ligne permet d'assurer que seul un admin peut modifier un utilisateur
+    #[IsGranted('ROLE_ADMIN')] 
     public function edit($id, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);
@@ -100,7 +102,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete/{id}', name: 'app_user_delete')]
-    #[IsGranted('ROLE_ADMIN')] // Cette ligne permet d'assurer que seul un admin peut supprimer un utilisateur
+    #[IsGranted('ROLE_ADMIN')] 
     public function delete($id, EntityManagerInterface $entityManager): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);

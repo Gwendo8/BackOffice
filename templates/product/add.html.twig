@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Produit{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 rounded">
+        <h1 class="text-center text-primary">Ajouter un Produit</h1>
+
+        <div class="mt-4">
+            {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                
+                <div class="mb-3">
+                    {{ form_label(form.name, 'Nom du produit', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.price, 'Prix (€)', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.price, {'attr': {'class': 'form-control', 'step': '0.01'}}) }}
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">💾 Enregistrer</button>
+
+            {{ form_end(form) }}
+
+            <div class="text-center mt-3">
+                <a href="{{ path('app_product') }}" class="btn btn-outline-secondary">↩ Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

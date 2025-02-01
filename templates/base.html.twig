@@ -1,73 +1,102 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Mon Application{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        /* Style pour le menu coulissant */
-        #sidebar {
-            height: 100%;
-            width: 250px;
-            position: fixed;
-            top: 0;
-            left: -250px;
-            background-color: #343a40;
-            padding-top: 60px;
-            transition: 0.3s;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}Mon Application
+			{% endblock %}
+		</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<style>
+			#sidebar {
+				height: 100%;
+				width: 250px;
+				position: fixed;
+				top: 0;
+				left: -250px;
+				background-color: #343a40;
+				padding-top: 60px;
+				transition: 0.3s;
+			}
 
-        #sidebar a {
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            display: block;
-        }
+			#sidebar a {
+				color: white;
+				padding: 15px;
+				text-decoration: none;
+				font-size: 18px;
+				display: block;
+			}
 
-        #sidebar a:hover {
-            background-color: #575757;
-        }
+			#sidebar a:hover {
+				background-color: #575757;
+			}
 
-        #sidebarToggle {
-            font-size: 30px;
-            color: #343a40;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <span id="sidebarToggle" onclick="toggleSidebar()">&#9776; Menu</span>
-            <h1>Bienvenue {% if app.user %}{{ app.user.lastname }}{% else %}utilisateur{% endif %}</h1>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                {% block body %}{% endblock %}
-            </div>
-        </div>
-    </div>
+			#sidebarToggle {
+				font-size: 30px;
+				color: #343a40;
+				cursor: pointer;
+			}
 
-    <!-- Menu Coulissant -->
-    <div id="sidebar">
-        <a href="{{ path('app_user') }}">Utilisateurs</a>
-        <a href="{{ path('app_product') }}">Produits</a>
-        {# <a href="{{ path('app_client') }}">Clients</a> #}
-    </div>
+			.logout-btn {
+				width: 100%;
+				text-align: left;
+				background: none;
+				border: none;
+				color: white;
+				font-size: 18px;
+				padding: 15px;
+				cursor: pointer;
+			}
 
-    <!-- Script pour ouvrir/fermer le menu coulissant -->
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const currentLeft = sidebar.style.left;
-            sidebar.style.left = currentLeft === "0px" ? "-250px" : "0px";
-        }
-    </script>
+			.logout-btn:hover {
+				background-color: #575757;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="d-flex justify-content-between align-items-center mt-3">
+				<span id="sidebarToggle" onclick="toggleSidebar()">&#9776; Menu</span>
+				<h1>Bienvenue
+					{% if app.user %}
+						{{ app.user.firstname }}{% else %}utilisateur
+					{% endif %}
+				</h1>
+			</div>
+			<div class="row">
+				<div class="col-12"> {% block body %}{% endblock %}
+					</div>
+				</div>
+			</div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+			<div id="sidebar">
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('app_user') }}">Utilisateurs</a>
+				{% endif %}
+				<a href="{{ path('app_product') }}">Produits</a>
+
+				{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+					<a href="{{ path('app_client') }}">Clients</a>
+				{% endif %}
+
+				{% if app.user %}
+					<form action="{{ path('app_logout') }}" method="post">
+						<button type="submit" class="logout-btn">Déconnexion</button>
+					</form>
+				{% endif %}
+			</div>
+
+			<script>
+				function toggleSidebar() {
+const sidebar = document.getElementById("sidebar");
+const currentLeft = sidebar.style.left;
+sidebar.style.left = currentLeft === "0px" ? "-250px" : "0px";
+}
+			</script>
+
+			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		</body>
+	</html>

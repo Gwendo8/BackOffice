@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Clients
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h1 class="h5">Liste des Clients</h1>
+			{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+				<a href="{{ path('app_client_add') }}" class="btn btn-md btn-primary">
+					<i class="fas fa-user-plus"></i>
+					Ajouter un client
+				</a>
+			{% endif %}
+		</div>
+
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped table-lg">
+				<thead class="table-light">
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Email</th>
+						<th>Téléphone</th>
+						<th>Adresse</th>
+						<th>Création</th>
+						{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+							<th>Actions</th>
+						{% endif %}
+
+					</tr>
+				</thead>
+				<tbody>
+					{% for client in clients %}
+						<tr>
+							<td>{{ client.lastname }}</td>
+							<td>{{ client.firstname }}</td>
+							<td>{{ client.email }}</td>
+							<td>{{ client.phoneNumber }}</td>
+							<td>{{ client.address }}</td>
+							<td>{{ client.createdAt|date('Y-m-d') }}</td>
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+
+								<td class="d-flex">
+									<a href="{{ path('app_client_edit', {'id': client.id}) }}" class="btn btn-warning btn-sm mr-2">
+										Modifier
+									</a>
+									<a href="{{ path('app_client_delete', {'id': client.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">
+										Supprimer
+									</a>
+								{% endif %}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="7" class="text-center">Aucun client trouvé.</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

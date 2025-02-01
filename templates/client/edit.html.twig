@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un client{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 rounded">
+            <h1 class="text-center text-warning">Modifier un client</h1>
+
+            <div class="mt-4">
+                {{ form_start(form) }}
+                    
+                    <div class="mb-3">
+                        {{ form_label(form.firstname, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.lastname, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.phoneNumber, 'Numéro de téléphone', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.phoneNumber, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.address, 'Adresse', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.createdAt, 'Date de création', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.createdAt, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-warning w-100">✏️ Modifier</button>
+
+                {{ form_end(form) }}
+
+                <div class="text-center mt-3">
+                    <a href="{{ path('app_client') }}" class="btn btn-outline-secondary">↩ Retour à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
