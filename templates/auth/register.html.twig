@@ -1,34 +1,36 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 
 {% block body %}
-    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
-            <h2 class="text-center mb-4">Create Account</h2>
+	<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+		<div class="card shadow-sm" style="width: 100%; max-width: 400px;">
+			<div class="card-body">
+				<h1 class="h3 mb-3 font-weight-normal text-center">Créer un compte</h1>
 
-            {{ form_start(registrationForm) }}
-                <div class="mb-3">
-                    {{ form_row(registrationForm.email, { 'attr': {'class': 'form-control', 'placeholder': 'Email'} }) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_row(registrationForm.firstname, { 'attr': {'class': 'form-control', 'placeholder': 'First Name'} }) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_row(registrationForm.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'Last Name'} }) }}
-                </div>
-                <div class="mb-3">
-                    {{ form_row(registrationForm.password, { 'attr': {'class': 'form-control', 'placeholder': 'Password'} }) }}
-                </div>
-                
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                </div>
-            {{ form_end(registrationForm) }}
-            
-            <div class="text-center mt-3">
-                <p>Already have an account? <a href="/login">Login</a></p>
-            </div>
-        </div>
-    </div>
+				{{ form_start(registrationForm) }}
+				<div class="mb-3">
+					{{ form_row(registrationForm.email, { 'attr': {'class': 'form-control', 'placeholder': 'Email'} }) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(registrationForm.firstname, { 'attr': {'class': 'form-control', 'placeholder': 'Prénom'} }) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(registrationForm.lastname, { 'attr': {'class': 'form-control', 'placeholder': 'Nom'} }) }}
+				</div>
+				<div class="mb-3">
+					{{ form_row(registrationForm.password, { 'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'} }) }}
+				</div>
+
+				<button type="submit" class="btn btn-lg btn-primary w-100">S'inscrire</button>
+				{{ form_end(registrationForm) }}
+
+				<div class="text-center mt-3">
+					<small>Déjà un compte ?
+						<a href="{{ path('app_login') }}">Se connecter</a>
+					</small>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

@@ -1,4 +1,3 @@
-
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -7,7 +6,7 @@
     <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
         <div class="card shadow-sm" style="width: 100%; max-width: 400px;">
             <div class="card-body">
-                <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
+                <h1 class="h3 mb-3 font-weight-normal text-center">Veuillez vous connecter</h1>
 
                 {% for message in app.flashes('error') %}
                     <div class="alert alert-danger">
@@ -17,9 +16,9 @@
 
                 {% if app.user %}
                     <div class="mb-3">
-                        You are logged in as
+                        Vous êtes connecté en tant que
                         {{ app.user.userIdentifier }},
-                        <a href="{{ path('app_logout') }}">Logout</a>
+                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
                     </div>
                 {% endif %}
 
@@ -30,16 +29,20 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">Mot de passe</label>
                         <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <button class="btn btn-lg btn-primary w-100" type="submit">
-                        Sign in
+                        Se connecter
                     </button>
                 </form>
+
+                <div class="text-center mt-3">
+                    <small>Pas encore de compte ? <a href="{{ path('app_register') }}">S'inscrire</a></small>
+                </div>
             </div>
         </div>
     </div>

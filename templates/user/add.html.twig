@@ -1,38 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add a new user{% endblock %}
+{% block title %}Ajouter un utilisateur{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="h3 mb-3">Add a new user</h1>
+    <div class="container mt-5">
+        <div class="card shadow-lg p-4 rounded">
+            <h1 class="text-center text-primary">Ajouter un utilisateur</h1>
 
-        {{ form_start(form) }}
-            <div class="mb-3">
-                {{ form_label(form.firstName) }}
-                {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+            <div class="mt-4">
+                {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+                    <div class="mb-3">
+                        {{ form_label(form.firstname, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_errors(form.firstname, {'attr': {'class': 'invalid-feedback'}}) }}
+                        {{ form_widget(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.lastname, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_errors(form.lastname, {'attr': {'class': 'invalid-feedback'}}) }}
+                        {{ form_widget(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_errors(form.email, {'attr': {'class': 'invalid-feedback'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_errors(form.password, {'attr': {'class': 'invalid-feedback'}}) }}
+                        {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.roles, 'Rôles', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_errors(form.roles, {'attr': {'class': 'invalid-feedback'}}) }}
+                        {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">💾 Enregistrer</button>
+
+                {{ form_end(form) }}
+
+                <div class="text-center mt-3">
+                    <a href="{{ path('app_user') }}" class="btn btn-outline-secondary">↩ Retour à la liste</a>
+                </div>
             </div>
-
-            <div class="mb-3">
-                {{ form_label(form.lastName) }}
-                {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
-            </div>
-
-            <div class="mb-3">
-                {{ form_label(form.email) }}
-                {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-            </div>
-
-            <div class="mb-3">
-                {{ form_label(form.password) }}
-                {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
-            </div>
-
-            <div class="mb-3">
-                {{ form_label(form.roles) }}
-                {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
-            </div>
-
-            <button class="btn btn-primary" type="submit">Add User</button>
-        {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

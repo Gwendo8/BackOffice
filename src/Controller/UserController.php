@@ -16,22 +16,22 @@ use Doctrine\ORM\EntityManagerInterface;
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user')]
-    #[IsGranted(attribute: 'ROLE_ADMIN')] 
+    #[IsGranted(attribute: 'ROLE_ADMIN')]
 
     public function index(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAllUser();
         return $this->render('user/index.html.twig', [
-            'users' => $users, 
+            'users' => $users,
         ]);
     }
 
     #[Route('/user/add', name: 'app_user_add')]
-    #[IsGranted(attribute: 'ROLE_ADMIN')] 
+    #[IsGranted(attribute: 'ROLE_ADMIN')]
     public function new(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['is_edit' => false]);
 
         $form->handleRequest($request);
 
@@ -63,8 +63,8 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/edit/{id}', name: 'app_user_edit')]
-    #[IsGranted('ROLE_ADMIN')] 
-    public function edit($id, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_ADMIN')]
+    public function edit($id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);
 
@@ -72,20 +72,11 @@ class UserController extends AbstractController
             throw $this->createNotFoundException('Utilisateur non trouvé');
         }
 
-        $currentPassword = $user->getPassword();
-
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['is_edit' => true]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!empty($user->getPassword())) {
-                $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
-                $user->setPassword($hashedPassword);
-            } else {
-                $user->setPassword($currentPassword);
-            }
-
             $roles = $form->get('roles')->getData();
             $user->setRoles($roles);
 
@@ -102,7 +93,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete/{id}', name: 'app_user_delete')]
-    #[IsGranted('ROLE_ADMIN')] 
+    #[IsGranted('ROLE_ADMIN')]
     public function delete($id, EntityManagerInterface $entityManager): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);
@@ -118,4 +109,3 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user');
     }
 }
-?>

@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use App\Security\Voter\ClientVoter;
 
 final class ClientController extends AbstractController
@@ -17,7 +18,6 @@ final class ClientController extends AbstractController
     #[Route('/client', name: 'app_client')]
     public function index(ClientRepository $clientRepository): Response
     {
-
         $clients = $clientRepository->findAllClient();
         return $this->render('client/index.html.twig', [
             'clients' => $clients,
@@ -25,7 +25,7 @@ final class ClientController extends AbstractController
     }
 
     #[Route('/client/add', name: 'app_client_add')]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, ValidatorInterface $validator): Response
     {
         $this->denyAccessUnlessGranted(ClientVoter::ADD);
 
@@ -36,6 +36,18 @@ final class ClientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($client);
+
+            if (count($errors) > 0) {
+                foreach ($errors as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+
+                return $this->render('client/add.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
             $client->setCreatedAt(new \DateTimeImmutable());
 
             $em->persist($client);
@@ -50,16 +62,28 @@ final class ClientController extends AbstractController
     }
 
     #[Route('/client/edit/{id}', name: 'app_client_edit')]
-    public function edit(Request $request, EntityManagerInterface $em, Client $client): Response
+    public function edit(Request $request, EntityManagerInterface $em, Client $client, ValidatorInterface $validator): Response
     {
         $this->denyAccessUnlessGranted(ClientVoter::EDIT, $client);
-        
 
         $form = $this->createForm(ClientType::class, $client);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($client);
+
+            if (count($errors) > 0) {
+                foreach ($errors as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+
+                return $this->render('client/edit.html.twig', [
+                    'form' => $form->createView(),
+                    'client' => $client
+                ]);
+            }
+
             $createdAt = $form->get('createdAt')->getData();
 
             if ($createdAt) {
@@ -68,7 +92,7 @@ final class ClientController extends AbstractController
                 }
                 $client->setCreatedAt($createdAt);
             } else {
-                $client->setCreatedAt(new \DateTimeImmutable()); 
+                $client->setCreatedAt(new \DateTimeImmutable());
             }
 
             $em->flush();
@@ -81,8 +105,9 @@ final class ClientController extends AbstractController
             'client' => $client
         ]);
     }
+
     #[Route('/client/delete/{id}', name: 'app_client_delete')]
-    public function delete($id, EntityManagerInterface $entityManager ,Client $client): Response
+    public function delete($id, EntityManagerInterface $entityManager, Client $client): Response
     {
         $this->denyAccessUnlessGranted(ClientVoter::DELETE, $client);
 

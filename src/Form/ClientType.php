@@ -33,10 +33,10 @@ class ClientType extends AbstractType
             ])
             ->add('createdAt', DateType::class, [
                 'label' => 'Date de création',
-                'widget' => 'single_text', // Date picker
-                'required' => false, // Permet de laisser vide
-                'empty_data' => null, // Valeur par défaut si laissé vide
-                'data' => $options['data']->getCreatedAt() ?: new \DateTimeImmutable(), // Remplir avec la date actuelle si aucune donnée
+                'widget' => 'single_text', 
+                'required' => false, 
+                'empty_data' => null, 
+                'data' => $options['data']->getCreatedAt() ?: new \DateTimeImmutable(), 
             ]);
     }
 
