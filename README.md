@@ -66,3 +66,8 @@ II. Fonctionnalitées
 	•	Vérifier un service du projet.
 	•	Tester la création d’un utilisateur, produit et client.
 	•	Installation et exécution des tests via PHPUnit.
+
+
+III. Vidéo
+
+1. Une vidéo montrant toutes les fonctionnalitées de l'application est disponible via lien : https://drive.google.com/drive/folders/1TvsGNsbz9Yi042wugCRf_dlHj1Hm208f?dmr=1&ec=wgc-drive-globalnav-goto
