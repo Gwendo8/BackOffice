@@ -70,4 +70,4 @@ II. Fonctionnalitées
 
 III. Vidéo
 
-1. Une vidéo montrant toutes les fonctionnalitées de l'application est disponible via lien : https://drive.google.com/file/d/1aSsph-7cD-WSOPduh6efdk_j_5Z1dqan/view?usp=drive_link
+1. Une vidéo montrant toutes les fonctionnalitées de l'application est disponible via lien : [https://drive.google.com/file/d/1aSsph-7cD-WSOPduh6efdk_j_5Z1dqan/view?usp=drive_link](https://drive.google.com/file/d/1aSsph-7cD-WSOPduh6efdk_j_5Z1dqan/view?usp=sharing)
